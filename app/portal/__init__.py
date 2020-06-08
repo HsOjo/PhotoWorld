@@ -15,7 +15,8 @@ class PortalController(Controller):
         self.add_route('/search', self.search)
 
     def index(self):
-        pagination = ArticleModel.query.order_by(ArticleModel.date.desc()).paginate(None, 5)
+        per_page = request.args.get('per_page', 5)
+        pagination = ArticleModel.query.order_by(ArticleModel.date.desc()).paginate(None, per_page)
         return render_template('portal/index.html', pagination=pagination)
 
     def search(self):
@@ -24,20 +25,20 @@ class PortalController(Controller):
             per_page = int(per_page)
         keyword = request.args.get('keyword', '').strip()
         if keyword == '':
-            return redirect(url_for('portal.index'))
+            return redirect(url_for('portal.index', per_page=per_page))
 
-        tag = TagModel.query.filter_by(name=keyword).first()  # type: TagModel
-        author = AuthorModel.query.filter_by(name=keyword).first()  # type: AuthorModel
         category = CategoryModel.query.filter_by(name=keyword).first()  # type: CategoryModel
-        if tag is not None:
-            prefix = '标签'
-            pagination = tag.articles.order_by(ArticleModel.date.desc()).paginate(None, per_page)
+        author = AuthorModel.query.filter_by(name=keyword).first()  # type: AuthorModel
+        tag = TagModel.query.filter_by(name=keyword).first()  # type: TagModel
+        if category is not None:
+            prefix = '分类'
+            pagination = category.articles.order_by(ArticleModel.date.desc()).paginate(None, per_page)
         elif author is not None:
             prefix = '作者'
             pagination = author.articles.order_by(ArticleModel.date.desc()).paginate(None, per_page)
-        elif category is not None:
-            prefix = '分类'
-            pagination = category.articles.order_by(ArticleModel.date.desc()).paginate(None, per_page)
+        elif tag is not None:
+            prefix = '标签'
+            pagination = tag.articles.order_by(ArticleModel.date.desc()).paginate(None, per_page)
         else:
             prefix = ''
             pagination = ArticleModel.query.order_by(ArticleModel.date.desc()).filter(or_(

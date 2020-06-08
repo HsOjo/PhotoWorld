@@ -4,7 +4,7 @@
         <a href="{{ url_for('portal.search', keyword=article.category.name) }}">
             <span class="label label-default">{{ article.category.name }}</span>
         </a>
-        <a href="{{ article.url }}" style="font-size: 24px; line-height: 36px">{{ article.title }}</a>
+        <a href="{{ article.url }}" style="font-size: 24px; line-height: 36px" target="_blank">{{ article.title }}</a>
     </h3>
     <p class="blog-post-meta">
         于 {{ article.date }} 由
