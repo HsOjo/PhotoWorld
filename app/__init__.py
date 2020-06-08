@@ -5,7 +5,7 @@ from flask_bootstrap import Bootstrap
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
-from . import common, filter
+from . import common
 
 
 class Application(Flask):
@@ -23,7 +23,6 @@ class Application(Flask):
         bootstrap_cdns['bootstrap'] = bootstrap_cdns['local']
         bootstrap_cdns['jquery'] = bootstrap_cdns['local']
 
-        common.register_all_callable_object_from_package(filter, True)
         self.register_controllers()
 
     def register_controllers(self):

@@ -18,13 +18,3 @@ def get_program_path():
 
 def get_data_path():
     return os.path.join(get_program_path(), get_config('DATA_DIR'))
-
-
-def register_all_callable_object_from_package(pkg, is_filter=False):
-    for k in dir(pkg):
-        f = getattr(pkg, k)
-        if callable(f):
-            if is_filter:
-                current_app.add_template_filter(f)
-            else:
-                current_app.add_template_global(f)
