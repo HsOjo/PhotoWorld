@@ -19,6 +19,7 @@ manager.add_command('shell', Shell(
 @manager.command
 def sync_articles():
     import os
+    os.putenv('PYTHONPATH', os.getcwd())
     os.chdir('collector')
     from scrapy.cmdline import execute
     execute(["scrapy", "crawl", "photo_world"])

@@ -22,9 +22,9 @@ class ArticlePipeline(object):
             if isinstance(v, str):
                 item[k] = v.strip()
 
-        time = item['time']
-        time = None if time == '' else time
-        item['time'] = time
+        date = item['date']
+        date = None if date == '' else date
+        item['date'] = date
 
         article = ArticleModel.query.filter_by(url=url).first()
         if article is None:
@@ -62,7 +62,7 @@ class ArticlePipeline(object):
                 title=item['title'],
                 description=item['description'],
                 thumbs=thumbs,
-                time=item['time'],
+                date=item['date'],
                 author=author,
                 category=category,
                 tags=tags,

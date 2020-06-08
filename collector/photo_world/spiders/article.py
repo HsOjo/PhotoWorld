@@ -60,7 +60,7 @@ class ArticleSpider(CrawlSpider):
             elif type == 3:
                 thumbs = []
 
-            time = tag_time['datetime'] if tag_time is not None else ''
+            date = tag_time['datetime'] if tag_time is not None else ''
             category = tag_category.text if tag_category is not None else ''
             author = tag_author.text if tag_author is not None else ''
             tags = [tag.text for tag in tags_tags]  # type: List[Tag]

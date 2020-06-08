@@ -14,7 +14,7 @@ class ArticleItem(scrapy.Item):
     title = scrapy.Field()
     description = scrapy.Field()
     thumbs = scrapy.Field()
-    time = scrapy.Field()
+    date = scrapy.Field()
     author = scrapy.Field()
     category = scrapy.Field()
     tags = scrapy.Field()
