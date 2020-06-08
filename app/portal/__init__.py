@@ -16,6 +16,8 @@ class PortalController(Controller):
 
     def index(self):
         per_page = request.args.get('per_page', 5)
+        if isinstance(per_page, str) and per_page.isnumeric():
+            per_page = int(per_page)
         pagination = ArticleModel.query.order_by(ArticleModel.date.desc()).paginate(None, per_page)
         return render_template('portal/index.html', pagination=pagination)
 

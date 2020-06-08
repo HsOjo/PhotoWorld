@@ -17,8 +17,9 @@
                         <input type="text" class="form-control" placeholder="请输入关键字" name="keyword" value="{{ request.args.get('keyword', '') }}">
                     </label>
                     <label>
-                        <select class="form-control" name="per_page">
-                            <option value="20">每页20条（默认）</option>
+                        <select class="form-control" name="per_page" id="input-per-page">
+                            <option value="5">每页5条</option>
+                            <option value="20" selected>每页20条（默认）</option>
                             <option value="50">每页50条</option>
                             <option value="100">每页100条</option>
                         </select>
