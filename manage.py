@@ -15,5 +15,14 @@ manager.add_command('shell', Shell(
         ArticleModel=ArticleModel,
     )))
 
+
+@manager.command
+def sync_articles():
+    import os
+    os.chdir('collector')
+    from scrapy.cmdline import execute
+    execute(["scrapy", "crawl", "photo_world"])
+
+
 if __name__ == '__main__':
     manager.run()

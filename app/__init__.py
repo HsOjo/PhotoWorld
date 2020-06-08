@@ -24,10 +24,15 @@ class Application(Flask):
         bootstrap_cdns['jquery'] = bootstrap_cdns['local']
 
         self.register_controllers()
+        self.register_objects()
 
     def register_controllers(self):
         from .portal import PortalController
         PortalController(self)
+
+    def register_objects(self):
+        self.add_template_global(enumerate)
+        self.add_template_global(len)
 
 
 db = SQLAlchemy()

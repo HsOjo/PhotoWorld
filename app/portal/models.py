@@ -9,12 +9,16 @@ class CategoryModel(db.Model):
     id = db.Column(db.INTEGER, primary_key=True, autoincrement=True)
     name = db.Column(db.VARCHAR(32))
 
+    articles = db.relationship('ArticleModel', lazy="dynamic")
+
 
 class AuthorModel(db.Model):
     __tablename__ = 'author'
 
     id = db.Column(db.INTEGER, primary_key=True, autoincrement=True)
     name = db.Column(db.VARCHAR(32))
+
+    articles = db.relationship('ArticleModel', lazy="dynamic")
 
 
 class ArticleModel(db.Model):
@@ -44,7 +48,7 @@ class TagModel(db.Model):
     id = db.Column(db.INTEGER, primary_key=True, autoincrement=True)
     name = db.Column(db.VARCHAR(32))
 
-    articles = db.relationship('ArticleModel', secondary='tag_connect', uselist=True)  # type: List[ArticleModel]
+    articles = db.relationship('ArticleModel', secondary='tag_connect', lazy="dynamic")
 
 
 class TagConnectModel(db.Model):

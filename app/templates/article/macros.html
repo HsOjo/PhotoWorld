@@ -1,20 +1,29 @@
 {% macro generate_article_content(article) %}
-    <h2 class="blog-post-title">
-        <a href="{{ article.url }}">{{ article.title }}</a>
-    </h2>
+    {% set tags_color = ['primary', 'success', 'info', 'warning', 'danger'] %}
+    <h3 class="blog-post-title">
+        <a href="{{ url_for('portal.search', keyword=article.category.name) }}">
+            <span class="label label-default">{{ article.category.name }}</span>
+        </a>
+        <a href="{{ article.url }}" style="font-size: 24px; line-height: 36px">{{ article.title }}</a>
+    </h3>
     <p class="blog-post-meta">
         于 {{ article.date }} 由
         {% if article.author.name %}
-            <a href="#">{{ article.author.name }}</a>
+            <a href="{{ url_for('portal.search', keyword=article.author.name) }}">{{ article.author.name }}</a>
         {% else %} 未知作者 {% endif %} 发布。
+        {% for i, tag in enumerate(article.tags) %}
+            <a href="{{ url_for('portal.search', keyword=tag.name) }}">
+                <span class="label label-{{ tags_color[i % len(tags_color)] }}">{{ tag.name }}</span>
+            </a>
+        {% endfor %}
     </p>
     <p>{{ article.description | safe | striptags }}</p>
 {% endmacro %}
 
 {% macro generate_article(article) %}
-    <div class="blog-post col-md-12">
+    <div class="blog-post bs-example row">
         {% if article.type == 1 %}
-            <div class="col-md-3">
+            <div class="col-md-3 col-sm-5">
                 {% for thumb in article.thumbs %}
                     <img class="thumbnail" src="{{ thumb.url }}" alt="{{ article.title }}" width="225" height="150">
                 {% endfor %}
@@ -32,6 +41,7 @@
         {% elif article.type == 3 %}
             {{ generate_article_content(article) }}
         {% endif %}
+        <p class="help-block" style="position: absolute; bottom: 4px">{{ article.url }}</p>
     </div>
 {% endmacro %}
 

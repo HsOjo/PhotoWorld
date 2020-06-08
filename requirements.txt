@@ -7,3 +7,5 @@ pymysql
 uwsgi
 flask_bootstrap
 flask_wtf
+scrapy
+beautifulsoup4
