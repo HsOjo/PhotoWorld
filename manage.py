@@ -26,4 +26,8 @@ def sync_articles():
 
 
 if __name__ == '__main__':
-    manager.run()
+    try:
+        manager.run()
+    except AssertionError as e:
+        if not 'Popped wrong app context.' in '%a' % e:
+            raise e

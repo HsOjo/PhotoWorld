@@ -15,7 +15,7 @@ class PortalController(Controller):
         self.add_route('/search', self.search)
 
     def index(self):
-        pagination = ArticleModel.query.order_by(ArticleModel.id.asc()).paginate(None, 5)
+        pagination = ArticleModel.query.order_by(ArticleModel.date.desc()).paginate(None, 5)
         return render_template('portal/index.html', pagination=pagination)
 
     def search(self):
@@ -31,16 +31,16 @@ class PortalController(Controller):
         category = CategoryModel.query.filter_by(name=keyword).first()  # type: CategoryModel
         if tag is not None:
             prefix = '标签'
-            pagination = tag.articles.order_by(ArticleModel.id.asc()).paginate(None, per_page)
+            pagination = tag.articles.order_by(ArticleModel.date.desc()).paginate(None, per_page)
         elif author is not None:
             prefix = '作者'
-            pagination = author.articles.order_by(ArticleModel.id.asc()).paginate(None, per_page)
+            pagination = author.articles.order_by(ArticleModel.date.desc()).paginate(None, per_page)
         elif category is not None:
             prefix = '分类'
-            pagination = category.articles.order_by(ArticleModel.id.asc()).paginate(None, per_page)
+            pagination = category.articles.order_by(ArticleModel.date.desc()).paginate(None, per_page)
         else:
             prefix = ''
-            pagination = ArticleModel.query.order_by(ArticleModel.id.asc()).filter(or_(
+            pagination = ArticleModel.query.order_by(ArticleModel.date.desc()).filter(or_(
                 ArticleModel.title.contains(keyword),
                 ArticleModel.description.contains(keyword),
             )).paginate(None, per_page)
