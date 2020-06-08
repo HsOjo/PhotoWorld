@@ -1,0 +1,30 @@
+{% extends 'bootstrap/base.html' %}
+{% import 'bootstrap/utils.html' as utils %}
+
+{% block navbar %}
+    {% include 'common/nav.html' %}
+{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename='blog.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container" style="margin-bottom: 16px; padding-top: 72px;">
+        {{ utils.flashed_messages() }}
+        {% block content_inner %}{% endblock %}
+    </div>
+    <footer class="blog-footer">
+        <p><a href="#">回到顶端</a></p>
+    </footer>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+
+    <script src="{{ url_for('static', filename='blog.js') }}"></script>
+    <script>
+        load_posts();
+    </script>
+{% endblock %}

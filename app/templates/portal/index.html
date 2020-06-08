@@ -1,0 +1,21 @@
+{% extends 'common/base.html' %}
+
+{% import 'article/macros.html' as macros %}
+{% import 'bootstrap/pagination.html' as pagi %}
+
+{% block title %}首页{% endblock %}
+
+{% block content_inner %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 blog-main">
+                <div class="blog-header">
+                    <h1 class="blog-title">摄 影 世 界</h1>
+                    <p class="lead blog-description">数据采集功能基于Scrapy实现，界面展示功能基于Flask实现。</p>
+                </div>
+                {{ macros.generate_articles(pagination.items) }}
+                <div class="col-md-12">{{ pagi.render_pagination(pagination) }}</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

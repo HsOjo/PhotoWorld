@@ -1,0 +1,79 @@
+{# 该模版用于编写其它页面所使用的宏指令 #}
+
+{# 生成单个文章的 HTML 结构 #}
+{% macro generate_article(article, is_full=True) %}
+    <div class="blog-post col-md-12">
+        <div class="col-md-3">
+            <img class="thumbnail" src="{{ article.thumb_url }}" alt="{{ article.title }}" width="180" height="120">
+        </div>
+        <div class="col-md-9">
+            <h2 class="blog-post-title">
+                {% if is_full %}
+                    {{ article.title }}
+                {% else %}
+                    <a href="{{ article.url }}">{{ article.title }}</a>
+                {% endif %}
+            </h2>
+            <p class="blog-post-meta">
+                于 {{ article.time }} 由
+                {% if article.author.name %}
+                    <a href="#">
+                        {{ article.author.name }}
+                    </a>
+                {% else %}
+                    未知作者
+                {% endif %}
+                发布。
+            </p>
+            <p>
+                {{ article.description | safe | striptags }}
+            </p>
+        </div>
+    </div>
+{% endmacro %}
+
+{# 生成多个文章的 HTML 结构 #}
+{% macro generate_articles(articles) %}
+    {% for article in articles %}
+        {{ generate_article(article, False) }}
+    {% endfor %}
+
+    {# 如果内容为空，则添加一个提示信息 #}
+    {% if not articles %}
+        <p>emmmm，作者偷懒啦，并没有添加文章。</p>
+    {% endif %}
+{% endmacro %}
+
+{# 生成单个文章留言 #}
+{% macro generate_comment(comment) %}
+    <div class="row blog-comment">
+        <div class="col-md-8 col-xs-6">
+            <h4>
+                <a href="{{ url_for('user.view', id=comment.author_id) }}">
+                    {% if comment.author %}
+                        {{ comment.author.info.nickname or comment.author.username }}
+                    {% else %}
+                        未知用户
+                    {% endif %}
+                </a>：
+            </h4>
+        </div>
+        <div class="col-md-4 col-xs-6">
+            <h5>{{ comment.create_time | convert_time }}</h5>
+        </div>
+        <div class="col-xs-12">
+            {{ comment.content | safe }}
+        </div>
+    </div>
+{% endmacro %}
+
+{# 生成多个文章留言 #}
+{% macro generate_comments(comments) %}
+    {% for comment in comments %}
+        {{ generate_comment(comment) }}
+    {% endfor %}
+
+    {% if not comments %}
+        <p style="text-align: center">暂时没有留言</p>
+    {% endif %}
+{% endmacro %}

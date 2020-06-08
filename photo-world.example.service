@@ -1,0 +1,10 @@
+[Unit]
+Description=PhotoWorld uWSGI Daemon
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/PhotoWorld
+ExecStart=/opt/PhotoWorld/venv/bin/uwsgi uwsgi.ini
+
+[Install]
+WantedBy=multi-user.target

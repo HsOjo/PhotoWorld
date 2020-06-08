@@ -1,0 +1,9 @@
+Flask_Script
+Flask_Migrate
+Flask_SQLAlchemy
+Flask
+SZPT_Course
+pymysql
+uwsgi
+flask_bootstrap
+flask_wtf
