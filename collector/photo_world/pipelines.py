@@ -14,6 +14,7 @@ app.app_context().push()
 
 class ArticlePipeline(object):
     def process_item(self, item: ArticleItem, spider):
+        # 数据处理部分
         url = item['url']
         if url is None or url == '':
             return item
@@ -57,6 +58,7 @@ class ArticlePipeline(object):
                     thumb = ThumbModel(url=thumb_url)
                 thumbs.append(thumb)
 
+            # 数据导入部分
             article = ArticleModel(
                 url=item['url'],
                 title=item['title'],

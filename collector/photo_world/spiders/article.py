@@ -17,6 +17,7 @@ class ArticleSpider(CrawlSpider):
     def parse_article(self, response: Response):
         bs = BeautifulSoup(response.text, 'html.parser')
 
+        # 结构解析部分
         articles = bs.find('div', 'main').find_all('article')
         for article in articles:
             article: Tag
@@ -47,6 +48,7 @@ class ArticleSpider(CrawlSpider):
             tag_author = article.find('a', attrs={'rel': 'author'})  # type: Tag
             tags_tags = article.find_all('a', {'rel': 'tag'})  # type: ResultSet
 
+            # 数据提取部分
             title = tag_title.text if tag_title is not None else ''
             url = tag_title['href'] if tag_title is not None else ''
             description = tag_description.text if tag_description is not None else ''
