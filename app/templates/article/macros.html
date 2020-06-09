@@ -28,13 +28,14 @@
                     <img class="thumbnail" src="{{ thumb.url }}" alt="{{ article.title }}" width="225" height="150">
                 {% endfor %}
             </div>
-            <div class="col-md-9" style="padding-left: 64px">
+            <div class="col-md-1"></div>
+            <div class="col-md-8">
                 {{ generate_article_content(article) }}
             </div>
         {% elif article.type == 2 %}
             {{ generate_article_content(article) }}
             {% for thumb in article.thumbs %}
-                <div class="col-md-4">
+                <div class="col-md-4 col-sm-6">
                     <img class="thumbnail" src="{{ thumb.url }}" alt="{{ article.title }}" width="240" height="160">
                 </div>
             {% endfor %}
