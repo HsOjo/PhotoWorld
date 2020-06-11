@@ -13,6 +13,8 @@ app.app_context().push()
 
 
 class ArticlePipeline(object):
+    close_count = 0
+
     def process_item(self, item: ArticleItem, spider):
         # 数据处理部分
         url = item['url']
@@ -73,5 +75,10 @@ class ArticlePipeline(object):
 
             db.session.add(article)
             db.session.commit()
+        else:
+            if self.close_count >= 20:
+                spider.crawler.engine.close_spider(spider, "当前页已爬取，关闭爬虫。")
+            else:
+                self.close_count += 1
 
         return item
